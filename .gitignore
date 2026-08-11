@@ -14,3 +14,11 @@ out/
 # Mac/Windows
 .DS_Store
 Thumbs.db
+backend/.vs/LoanApplication.Api/config/applicationhost.config
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/CodeChunks.db
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/CodeChunks.db-shm
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/CodeChunks.db-wal
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/SemanticSymbols.db
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/SemanticSymbols.db-shm
+backend/.vs/LoanApplication.Api/CopilotIndices/17.14.995.13737/SemanticSymbols.db-wal
+backend/.vs/LoanApplication.Api/FileContentIndex/3609cb84-c86e-4e86-85c5-82a82ae9d2cb.vsidx
