@@ -1,0 +1,16 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+appsettings.Development.json
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+.env*.local
+
+# Mac/Windows
+.DS_Store
+Thumbs.db
