@@ -1,14 +1,19 @@
-using System.Threading;
-using System.Threading.Tasks;
+using System;
 using LoanApplication.Api.Application.Features.Loans;
 
 namespace LoanApplication.Api.Application.Rules;
 
 public sealed class NyStateRule : ILoanRule
 {
-    public Task<bool> IsSatisfiedAsync(SubmitApplicationCommand command, CancellationToken cancellationToken = default)
+    public bool Evaluate(SubmitApplicationCommand command, out string? denialReason)
     {
-        // Regla de ejemplo mínima: no impide por ahora; placeholder simple.
-        return Task.FromResult(true);
+        if (string.Equals(command.State, "NY", StringComparison.OrdinalIgnoreCase))
+        {
+            denialReason = "El estado de NY no estÃ¡ permitido.";
+            return false;
+        }
+
+        denialReason = null;
+        return true;
     }
 }

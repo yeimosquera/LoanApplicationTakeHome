@@ -3,13 +3,12 @@ using LoanApplication.Api.Domain.Customers;
 
 namespace LoanApplication.Api.Domain.Loans;
 
-public sealed record Application
-(
-    Guid Id,
-    decimal RequestedAmount,
-    Guid CustomerId
-)
+public sealed class LoanApplication
 {
-    // Navegación (init para que EF Core pueda materializarla)
-    public Customer? Customer { get; init; }
+    public Guid Id { get; set; }
+    public decimal RequestedAmount { get; set; }
+
+    // FK y navegación
+    public Guid CustomerId { get; set; }
+    public Customer? Customer { get; set; }
 }

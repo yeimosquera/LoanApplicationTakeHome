@@ -15,6 +15,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+  </ItemGroup>
+  <!-- Exclude nested project files from being compiled into this project to avoid duplicate top-level statements -->
+  <ItemGroup>
+    <Compile Remove="MockExternalService.Api\**\*.cs" />
   </ItemGroup>
 
 </Project>

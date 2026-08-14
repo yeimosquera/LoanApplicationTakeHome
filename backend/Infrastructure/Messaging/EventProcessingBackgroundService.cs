@@ -1,6 +1,6 @@
 using System;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
@@ -28,23 +28,16 @@ public sealed class EventProcessingBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var reader = _channel.Reader;
-
-        while (await reader.WaitToReadAsync(stoppingToken))
+        await foreach (var @event in _channel.Reader.ReadAllAsync(stoppingToken))
         {
-            while (reader.TryRead(out var @event))
-            {
-                try
+            try
                 {
                     var client = _httpClientFactory.CreateClient("ExternalMock");
-                    var json = JsonSerializer.Serialize(@event);
-                    using var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await client.PostAsync("/api/external-mock", content, stoppingToken);
+                    var response = await client.PostAsJsonAsync("/api/external-mock", @event, stoppingToken);
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        _logger.LogWarning("ExternalMock returned {StatusCode} for event {Event}", response.StatusCode, @event);
+                        _logger.LogWarning("External mock returned non-success status {StatusCode} for event {@Event}", response.StatusCode, @event);
                     }
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
@@ -55,9 +48,8 @@ public sealed class EventProcessingBackgroundService : BackgroundService
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error while processing event {Event}", @event);
-                    // no rethrow: se continúa procesando otros eventos
+                    // no rethrow: se continï¿½a procesando otros eventos
                 }
-            }
         }
     }
 }
